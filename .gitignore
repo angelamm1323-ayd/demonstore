@@ -1,1 +1,42 @@
-node_modules
+# Dependencias
+node_modules/
+
+# Build de SvelteKit
+.svelte-kit/
+build/
+dist/
+
+# Archivos de logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Sistema
+.DS_Store
+Thumbs.db
+
+# Entornos
+.env
+.env.*
+!.env.example
+
+# Vite
+.vite/
+
+# Editor/IDE
+.vscode/
+.idea/
+
+# Archivos temporales
+*.tmp
+*.swp
+*.swo
+
+# Linux
+*~
+
+# Lock opcionales (si quieres ignorarlos)
+# package-lock.json
+# pnpm-lock.yaml
+# yarn.lock
