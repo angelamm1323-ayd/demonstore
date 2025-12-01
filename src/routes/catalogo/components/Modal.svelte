@@ -1,45 +1,38 @@
-<!-- En Modal.svelte -->
 <script>
     import { fade } from "svelte/transition";
+    import { createEventDispatcher } from "svelte";
 
     export let isOpen = false;
     export let product = null;
 
-    import { createEventDispatcher } from "svelte";
     const dispatch = createEventDispatcher();
+    const close = () => dispatch("close");
 
-    const close = () => {
-        dispatch("close");
-    };
-
-    const formatPrice = (price) => {
-        return new Intl.NumberFormat("es-CO", {
+    const formatPrice = (price) =>
+        new Intl.NumberFormat("es-CO", {
             style: "currency",
             currency: "COP",
             minimumFractionDigits: 0,
         }).format(price);
-    };
 </script>
 
 {#if isOpen}
     <div
-        class="fixed inset-0 bg-black/80 backdrop-blur-sm z-50 p-4 overflow-y-auto"
+        class="fixed inset-0 bg-black/60 backdrop-blur-sm z-50 p-4 overflow-y-auto"
         on:click|self={close}
         on:keydown={(e) => e.key === "Escape" && close()}
         transition:fade
         role="dialog"
         aria-modal="true"
-        aria-label="Detalle del producto"
         tabindex="0"
     >
         <div
-            class="mx-auto bg-linear-to-br from-gray-800 to-gray-900 shadow-2xl max-w-4xl w-full animate-fade-up relative rounded-lg overflow-hidden"
-            role="document"
+            class="mx-auto bg-gray-900 shadow-2xl max-w-4xl w-full animate-fade-up relative rounded-xl overflow-hidden md:py-6 md:px-4"
         >
             <div class="grid grid-cols-1 md:grid-cols-2">
-                <!-- IZQUIERDA - IMAGEN -->
+                <!-- IMAGEN -->
                 <div
-                    class="relative h-72 md:h-full w-full overflow-hidden bg-gray-900"
+                    class="relative h-72 md:h-full w-full overflow-hidden md:rounded-xl bg-black"
                 >
                     <img
                         src={product?.image || "/imagenotfound.jpg"}
@@ -48,23 +41,24 @@
                         on:error={(e) => (e.target.src = "/imagenotfound.jpg")}
                     />
 
+                    <!-- BOTÓN CERRAR - igual estilo que la tienda anterior -->
                     <button
                         on:click={close}
                         aria-label="Cerrar"
-                        class="absolute top-4 right-4 bg-gray-700/80 text-white w-10 h-10 rounded-full
-                               flex items-center justify-center text-xl shadow hover:bg-red-600 transition cursor-pointer"
+                        class="absolute top-4 right-4 bg-white/60 text-red-700 w-10 h-10 rounded-full
+                            flex items-center justify-center text-xl shadow hover:bg-white transition cursor-pointer"
                     >
                         ✕
                     </button>
                 </div>
 
-                <!-- DERECHA - CONTENIDO -->
+                <!-- CONTENIDO -->
                 <div class="flex flex-col h-full p-6">
                     <div
                         class="flex flex-col gap-6 overflow-auto grow pr-2 justify-evenly items-start"
                     >
                         <div class="flex flex-col space-y-2">
-                            <h1 class="text-2xl font-bold text-white">
+                            <h1 class="text-4xl font-bold text-red-500">
                                 {product?.name}
                             </h1>
 
@@ -77,106 +71,81 @@
                             {/if}
                         </div>
 
-                        <!-- TALLAS Y ESPECIFICACIONES -->
+                        <!-- TALLAS TIPO TOP -->
                         {#if product?.sizes && Object.values(product.sizes).some((v) => v > 0)}
-                            <div class="w-full">
-                                <p class="text-sm text-gray-400 mb-2">
-                                    Tallas disponibles
-                                </p>
-                                <div class="flex flex-wrap gap-2">
-                                    {#each Object.entries(product.sizes) as [talla, cantidad]}
-                                        {#if cantidad > 0}
-                                            <div
-                                                class="flex flex-col items-center"
+                            <div>
+                                <p class="text-md text-gray-200">Tallas</p>
+                                <div class="flex gap-2 flex-wrap">
+                                    {#each Object.entries(product.sizes) as [talla, cant]}
+                                        {#if cant > 0}
+                                            <span
+                                                class="px-2 py-1 rounded bg-gray-950 text-white text-sm border border-white/20"
                                             >
-                                                <span
-                                                    class="px-3 py-1 bg-gray-700 text-white rounded-full text-sm"
-                                                >
-                                                    {talla.toUpperCase()}
-                                                </span>
-                                                <span
-                                                    class="text-xs text-gray-400 mt-1"
-                                                    >{cantidad} unid.</span
-                                                >
-                                            </div>
+                                                {talla.toUpperCase()} ({cant})
+                                            </span>
                                         {/if}
                                     {/each}
                                 </div>
                             </div>
                         {/if}
 
-                        <!-- Información de precios y stock -->
-                        <div class="w-full space-y-4">
-                            <div class="grid grid-cols-2 gap-4">
-                                <div>
-                                    <p class="text-sm text-gray-400">
-                                        Precio de venta
-                                    </p>
-                                    <p class="text-xl font-bold text-gray-300">
-                                        {formatPrice(product?.valorVenta)}
-                                    </p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-400">
-                                        Tipo de prenda
-                                    </p>
-                                    <p class="text-lg text-white capitalize">
-                                        {product?.clothingType === "top"
-                                            ? "Superior"
-                                            : "Inferior"}
-                                    </p>
-                                </div>
-                                <div>
-                                    <p class="text-sm text-gray-400">
-                                        Categoría
-                                    </p>
-                                    <p class="text-lg text-white capitalize">
-                                        {product.category || "Sin categoría"}
-                                    </p>
-                                </div>
-                                <div class="text-right">
-                                    <p class="text-sm text-gray-400">
-                                        Stock total
-                                    </p>
-                                    <p class="text-2xl font-bold text-white">
-                                        {product?.stock} unid.
-                                    </p>
+                        <!-- TALLAS NUMÉRICAS -->
+                        {#if product?.clothingType === "bottom" && product?.numericSizes?.length}
+                            <div>
+                                <p class="text-md text-gray-200">Tallas</p>
+                                <div class="flex gap-2 flex-wrap">
+                                    {#each product.numericSizes as size}
+                                        <span
+                                            class="px-2 py-1 rounded bg-gray-950 text-white text-sm border border-white/20"
+                                        >
+                                            {size.size}
+                                        </span>
+                                    {/each}
                                 </div>
                             </div>
+                        {/if}
 
-                            <!-- Tallas numéricas para pantalones -->
-                            {#if product?.clothingType === "bottom" && product?.numericSizes?.length > 0}
-                                <div class="mt-4">
-                                    <p class="text-sm text-gray-400 mb-2">
-                                        Tallas disponibles
-                                    </p>
-                                    <div class="flex flex-wrap gap-2">
-                                        {#each product.numericSizes as size}
-                                            <span
-                                                class="px-3 py-1 bg-gray-700 text-white rounded-full text-sm"
-                                            >
-                                                #{size.size} - {size.quantity} unidades
-                                            </span>
-                                        {/each}
-                                    </div>
-                                </div>
-                            {/if}
+                        <!-- PRECIO + STOCK -->
+                        <div class="grid grid-cols-2 gap-6 w-full">
+                            <div>
+                                <p class="text-md text-red-500">Precio</p>
+                                <p class="text-xl font-semibold text-white">
+                                    {formatPrice(product?.valorVenta)}
+                                </p>
+                            </div>
+
+                            <div class="text-right">
+                                <p class="text-md text-red-500">Stock</p>
+                                <p class="text-xl font-semibold text-white">
+                                    {product?.stock}
+                                </p>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- BOTONES DE ACCIÓN -->
-                    <div class="mt-6 pt-6 border-t border-gray-700">
+                    <!-- FOOTER -->
+                    <div
+                        class="grid grid-cols-4 gap-3 mt-auto border-t border-red-900 pt-6"
+                    >
                         <a
-                            href={`https://wa.me/573189746650?text=Hola! Me interesa el producto: ${encodeURIComponent(product?.name)}`}
+                            href={`https://wa.me/573189746650?text=Hola! Me interesa el producto: ${product?.name}`}
                             target="_blank"
                             rel="noopener noreferrer"
-                            class="w-full bg-linear-to-r from-red-600 to-red-800 hover:from-red-700 hover:to-red-900
-                                   text-white py-3 px-4 rounded-lg font-medium transition-all duration-300
-                                   transform hover:scale-[1.02] active:scale-95 text-center flex items-center justify-center gap-2"
+                            class="col-span-3 bg-linear-to-r from-red-600 to-red-700 text-white py-3 rounded-lg
+                        font-semibold text-center shadow hover:from-red-500 hover:to-red-600 transition
+                        flex items-center justify-center gap-2 hover:scale-[1.01]"
                         >
-                            <i class="fab fa-whatsapp text-xl"></i>
+                            <i class="fab fa-whatsapp text-lg"></i>
                             Consultar por WhatsApp
                         </a>
+
+                        <button
+                            class="col-span-1 bg-linear-to-r border border-red-600 text-red-400 py-3 rounded-lg font-semibold shadow
+                                hover:from-red-600 hover:to-red-700 hover:text-white transition flex items-center justify-center text-xl hover:scale-[1.06] cursor-pointer"
+                            aria-label="Agregar al carrito"
+                        >
+                            <i class="fa-solid fa-cart-shopping"></i>
+                        </button>
                     </div>
                 </div>
             </div>

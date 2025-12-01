@@ -53,13 +53,13 @@
 
     <div class="p-6">
         <h3
-            class="text-xl font-bold mb-2 text-white group-hover:text-red-400 transition-colors"
+            class="text-4xl font-bold mb-2 text-white group-hover:text-red-500 transition-colors"
         >
             {product.name}
         </h3>
 
         {#if product.description}
-            <p class="text-sm text-gray-400 mb-4 line-clamp-2">
+            <p class="text-md text-gray-400 mb-4 line-clamp-2">
                 {product.description}
             </p>
         {/if}
