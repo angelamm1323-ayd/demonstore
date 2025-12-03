@@ -1,1 +1,10 @@
 @import 'tailwindcss';
+
+@font-face {
+    font-family: 'DemonFont';
+    src: url('/src/lib/assets/fonts/rogenzdemo-3l2y8.otf');
+}
+
+.demon-font {
+    font-family: 'DemonFont';
+}

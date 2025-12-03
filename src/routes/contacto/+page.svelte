@@ -40,11 +40,11 @@
 
         <div class="relative z-10 container mx-auto px-4 text-center">
             <h1
-                class="text-5xl md:text-6xl font-black mb-6 bg-clip-text text-transparent bg-linear-to-r from-white to-red-400"
+                class="text-5xl md:text-8xl mb-6 bg-clip-text text-transparent bg-linear-to-r from-white to-red-400 demon-font font-normal"
             >
-                Contáctanos
+                Contactanos
             </h1>
-            <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+            <p class="text-xl text-gray-300 mb-8 max-w-2xl mx-auto font-light">
                 Estamos aquí para ayudarte. ¡Visítanos o escríbenos!
             </p>
         </div>

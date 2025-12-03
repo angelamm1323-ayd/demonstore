@@ -39,7 +39,7 @@
         <div class="absolute inset-0 z-0">
             <!-- Logo como fondo con opacidad -->
             <div
-                class="absolute inset-0 bg-[url('/logo.svg')] bg-cover bg-center opacity-9"
+                class="absolute inset-0 bg-[url('/logo-cropped-2.svg')] bg-cover bg-center opacity-16 blur-sm"
             ></div>
             <!-- Overlay oscuro para mejorar legibilidad -->
             <div class="absolute inset-0 bg-black/40"></div>
@@ -56,13 +56,13 @@
             <div class="flex h-100 flex-col justify-between items-center">
                 <div>
                     <h1
-                        class="text-5xl md:text-7xl font-black mb-6 bg-clip-text text-transparent bg-linear-to-r from-white to-red-400"
+                        class="text-5xl md:text-8xl mb-6 bg-clip-text text-transparent bg-linear-to-r from-white to-red-400 demon-font font-normal"
                     >
                         DEMON STORE
                     </h1>
 
                     <p
-                        class="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto"
+                        class="text-xl md:text-2xl text-gray-300 mb-8 max-w-2xl mx-auto font-extralight"
                     >
                         "Además de venderte ropa, te vendemos estilo"
                     </p>

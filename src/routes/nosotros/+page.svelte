@@ -46,24 +46,24 @@
 
         <div class="relative z-10 container mx-auto px-4 text-center">
             <div
-                class="inline-block mb-8 overflow-hidden rounded-full p-1 bg-linear-to-r from-red-600 to-red-900"
+                class="inline-block mb-8 overflow-hidden rounded-full border-red-600 border-4 bg-black"
                 in:fly={{ y: -50, duration: 1000, easing: quintOut }}
             >
                 <img
-                    src="/logo.jpg"
+                    src="/logo-cropped-2.svg"
                     alt="Demon Store Logo"
-                    class="h-32 w-32 object-cover rounded-full border-4 border-black"
+                    class="h-32 w-32 object-contain rounded-full p-1"
                 />
             </div>
 
             <h1
-                class="text-5xl md:text-6xl font-black mb-6 bg-clip-text text-transparent bg-linear-to-r from-white to-red-400"
+                class="text-5xl md:text-8xl mb-6 bg-clip-text text-transparent bg-linear-to-r from-white to-red-400 demon-font font-normal"
                 in:fly={{ y: 50, duration: 1000, delay: 200, easing: quintOut }}
             >
                 Sobre Demon Store
             </h1>
             <p
-                class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed"
+                class="text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed font-light"
                 in:fly={{ y: 50, duration: 1000, delay: 400, easing: quintOut }}
             >
                 Más que una tienda de ropa, somos un destino de estilo. Desde

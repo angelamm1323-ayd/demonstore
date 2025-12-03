@@ -21,7 +21,7 @@
 </script>
 
 <svelte:head>
-	<link rel="icon" href="/logo.jpg" />
+	<link rel="icon" href="/logo-cropped-2.svg" />
 </svelte:head>
 
 {#if !isAdminRoute}
